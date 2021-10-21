@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>待辦清單</title>
+</head>
+<style>
+  * {
+    position: relative;
+  }
+
+  body {
+    background: linear-gradient(90deg, #CEE5D0, #F3F0D7);
+  }
+
+  .container {
+    background: white;
+    width: 20%;
+    margin: 7% auto;
+    padding: 20px 20px;
+    border-radius: 5%;
+    box-shadow: 2px 2px 2px 1px #E0C097;
+  }
+
+  h1 {
+    margin-top: 0;
+  }
+
+  .todo__input {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+  }
+
+  input {
+    display: inline-block;
+    padding: 10px 10px;
+    width: 75%;
+    margin-right: 5px;
+    border: 1px solid silver;
+  }
+
+  .add {
+    background: #E0C097;
+    color: white;
+    font-size: 40px;
+    border-radius: 5%;
+    border: none;
+    padding: 0 5%;
+  }
+
+  .container__items {
+    margin-left: 1px;
+  }
+
+  .item {
+    background: rgb(245, 244, 244);
+    border-radius: 5%;
+    margin: 2% 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .item span {
+    padding-left: 3%;
+    overflow: auto;
+  }
+
+  .btns {
+    display: flex;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 2.5% 2%;
+    border-radius: 10%;
+    border: none;
+    color: white;
+  }
+
+  .btn.delete {
+    background: #FF7878;
+  }
+
+  .btn.edit {
+    background: #e49a11;
+    margin-right: 1%;
+  }
+
+  .footer {
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer span {
+    padding-left: 1%;
+  }
+
+  .deleteAll {
+    background: #E0C097;
+    color: white;
+    font-size: 20px;
+    border-radius: 5%;
+    border: none;
+    padding: 1% 2%;
+  }
+
+  .invisible {
+    display: none;
+  }
+</style>
+
+<body>
+  <div class="container">
+    <h1>Todo List</h1>
+    <div class="todo__input">
+      <input type="text" name="item" placeholder="要做的事情">
+      <button class="add">+</button>
+    </div>
+    <div class="container__items">
+      <!-- <div class="item">
+        <span>yeah</span>
+        <input class="invisible" value="yeah" type="text">
+        <div class="btns">
+          <div class="btn edit">edit</div>
+          <div class="btn delete">delete</div>
+        </div>
+      </div> -->
+    </div>
+    <div class="footer">
+      <span>You have pending tasks</span>
+      <button class="deleteAll">Clear All</button>
+    </div>
+  </div>
+
+
+</body>
+<script>
+
+  document.querySelector('.add').addEventListener('click', e => {
+    const text = e.target.parentNode.querySelector('input').value
+    if (text !== '') {
+      const node = document.querySelector('.container__items')
+      const newEle = document.createElement('div')
+      newEle.classList.add("item")
+      newEle.innerHTML = `
+        <span>${text}</span>
+        <input class="invisible" value="${text}" type="text">
+        <div class="btns">
+          <div class="btn edit">edit</div>
+          <div class="btn delete">delete</div>
+        </div>
+      `
+      node.appendChild(newEle)
+      e.target.parentNode.querySelector('input').value = ''
+    }
+  })
+
+  document.querySelector('.container__items').addEventListener('click', e => {
+    if (e.target.classList.contains('delete')) {
+      e.target.parentNode.parentNode.parentNode.removeChild(e.target.parentNode.parentNode)
+    } else if (e.target.classList.contains('edit')) {
+      const spanElement = e.target.parentNode.parentNode.querySelector('span')
+      const inputElement = e.target.parentNode.parentNode.querySelector('input')
+      spanElement.classList.toggle('invisible')
+      inputElement.classList.toggle('invisible')
+      spanElement.innerText = inputElement.value
+    }
+  })
+  document.querySelector('.deleteAll').addEventListener('click', e => {
+    document.querySelector('.container__items').innerHTML = ''
+  })
+</script>
+
+</html>
