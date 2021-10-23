@@ -76,7 +76,7 @@
 
   .btn {
     display: inline-block;
-    padding: 2.5% 2%;
+    padding: 2.5% 3%;
     border-radius: 10%;
     border: none;
     color: white;
@@ -113,6 +113,10 @@
 
   .invisible {
     display: none;
+  }
+
+  .hidden {
+    visibility: hidden;
   }
 </style>
 
@@ -168,9 +172,16 @@
     } else if (e.target.classList.contains('edit')) {
       const spanElement = e.target.parentNode.parentNode.querySelector('span')
       const inputElement = e.target.parentNode.parentNode.querySelector('input')
+      const deleteBtn = e.target.parentNode.querySelector('.delete')
       spanElement.classList.toggle('invisible')
       inputElement.classList.toggle('invisible')
+      deleteBtn.classList.toggle('hidden')
       spanElement.innerText = inputElement.value
+      if (e.target.innerText === 'edit') {
+        e.target.innerText = 'ok'
+      } else {
+        e.target.innerText = 'edit'
+      }
     }
   })
   document.querySelector('.deleteAll').addEventListener('click', e => {
